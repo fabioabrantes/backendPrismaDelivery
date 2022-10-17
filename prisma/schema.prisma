@@ -11,31 +11,34 @@ datasource db {
 }
 
 model Deliveryman {
-  id       String @id @default(uuid())
-  username String @unique
-  password String
+  id         String       @id @default(uuid())
+  username   String       @unique
+  password   String
+  deliveries Deliveries[]
 
   @@map("deliveryman")
 }
 
 model Deliveries {
-  id String @id @default(uuid())
+  id        String @id @default(uuid())
+  item_name String @unique
 
-  id_client String
+  client       Clients @relation(fields: [id_fk_client], references: [id])
+  id_fk_client String
 
-  id_deliveryman String?
-
-  item_name  String
-  created_at DateTime  @default(now())
-  end_at     DateTime?
+  deliveryman       Deliveryman @relation(fields: [id_fk_deliveryman], references: [id])
+  id_fk_deliveryman String
+  created_at        DateTime    @default(now())
+  end_at            DateTime?
 
   @@map("deliveries")
 }
 
 model Clients {
-  id       String @id @default(uuid())
-  username String @unique
-  password String
+  id         String       @id @default(uuid())
+  username   String       @unique
+  password   String
+  deliveries Deliveries[]
 
   @@map("clients")
 }
