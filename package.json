@@ -7,6 +7,7 @@
     "dev": "ts-node-dev --exit-child --transpile-only  --ignore-watch node_modules src/server.ts"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/express": "^4.17.14",
     "prisma": "^4.4.0",
     "ts-node-dev": "^2.0.0",
@@ -14,6 +15,9 @@
   },
   "dependencies": {
     "@prisma/client": "^4.4.0",
-    "express": "^4.18.1"
+    "bcrypt": "^5.1.0",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.1",
+    "jsonwebtoken": "^8.5.1"
   }
 }

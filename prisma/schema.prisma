@@ -26,9 +26,9 @@ model Deliveries {
   client       Clients @relation(fields: [id_fk_client], references: [id])
   id_fk_client String
 
-  deliveryman       Deliveryman @relation(fields: [id_fk_deliveryman], references: [id])
-  id_fk_deliveryman String
-  created_at        DateTime    @default(now())
+  deliveryman       Deliveryman? @relation(fields: [id_fk_deliveryman], references: [id])
+  id_fk_deliveryman String?
+  created_at        DateTime     @default(now())
   end_at            DateTime?
 
   @@map("deliveries")
