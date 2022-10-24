@@ -1,13 +1,20 @@
-import express,{Request,Response} from 'express';
+import express from 'express';
 import * as dotenv from 'dotenv';
-import { RegisterClientController } from './modules/registerClient/RegisterClientController';
+
+//middlewares
+import { verifyTokenAuthenticationClient } from './middlewares/verifyTokenAuthenticationClient';
+import { verifyTokenAuthenticationDeliveryman } from './middlewares/verifyTokenAuthenticationDeliveryman';
+
+import { RegisterClientController } from './modules/clients/registerClient/RegisterClientController';
+import { AuthenticateClientController } from './modules/authentication/authenticationClient/AuthenticateClientController';
+import { RegisterDeliverymanController } from './modules/deliveryman/register/RegisterDeliverymanController';
+import { FindAllByClientController } from './modules/deliveries/findAllByClient/FindAllByClientController';
+import { FindAllByDeliverymanController } from './modules/deliveries/findAllByDeliveryman/FindAllByDeliverymanController';
+import { FindAllUndeliverableController } from './modules/deliveries/findAllUndeliverable/FindAllUndeliverableController';
+import { RegisterByClientController } from './modules/deliveries/registerByClient/RegisterByClientController';
+import { UpdateByDeliverymanController } from './modules/deliveries/updateByDeliveryman/UpdateByDeliverymanController';
 
 
-type IUser = {
-  name:string;
-  description:string;
-  suap:number;
-}
 
 dotenv.config();
 
@@ -15,11 +22,33 @@ const app = express();
 //middleware
 app.use(express.json());
 
-
+//client
 const registerClientController = new RegisterClientController();
 app.post('/client/register',registerClientController.handle);
 
+//autenticação
+const authenticateClientController = new AuthenticateClientController();
+app.post('/client/login',authenticateClientController.handle);
 
+// deliveryman
+const registerDeliverymanController = new RegisterDeliverymanController();
+app.post('/deliveryman/register', registerDeliverymanController.handle);
+
+// deliveries
+const registerByClientController = new RegisterByClientController();
+app.post('/deliveries/register', verifyTokenAuthenticationClient, registerByClientController.handle);
+
+const findAllByClientController =  new FindAllByClientController();
+app.get('/deliveries/allByClient',verifyTokenAuthenticationClient, findAllByClientController.handle);
+
+const findAllByDeliverymanController =  new FindAllByDeliverymanController();
+app.get('/deliveries/allByDeliveryman',verifyTokenAuthenticationClient, findAllByDeliverymanController.handle);
+
+const findAllUndeliverableController =  new FindAllUndeliverableController();
+app.get('/deliveries/allUndeliverable',verifyTokenAuthenticationDeliveryman, findAllUndeliverableController.handle);
+
+const updateByDeliverymanController = new UpdateByDeliverymanController();
+app.put('/deliveries/updateByDeliveryman/:id',verifyTokenAuthenticationDeliveryman, updateByDeliverymanController.handle);
 
 
 app.listen(3333,() => {

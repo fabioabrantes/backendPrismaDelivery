@@ -11,8 +11,8 @@ export class RegisterClientController{
       // enviar para o caso de uso
   
       const registerClientUseCase = new RegisterClientUseCase();
-      const result = registerClientUseCase.execute({username, password});
-  
+      const result = await registerClientUseCase.execute({username, password});
+            
       return res.status(200).json(result);
     } catch (error:any) {
       return res.status(400).json({

@@ -29,7 +29,6 @@ export class RegisterClientUseCase{
         username, password:passwordHash
       }
     });
-
     return client;
   }
 }
