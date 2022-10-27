@@ -2,7 +2,7 @@ import {Request, Response, NextFunction} from "express";
 import {verify} from "jsonwebtoken";
 
 interface IPayload{
-  sub:string;
+  id:string;
   iat:number;
   exp: number;
   username:string;
@@ -25,10 +25,10 @@ export function verifyTokenAuthenticationDeliveryman(
     const [,token] = authHeader.split(" "); 
     // validar se é o token gerado
     try {
-      const {sub,username} = verify(token, process.env.KEY_TOKEN!) as IPayload;
-      console.log(sub,username);
-      //request.id_deliveryman = sub;
-     // request.username = username;
+      const {id,username} = verify(token, process.env.KEY_TOKEN!) as IPayload;
+      console.log(id,username);
+      request.id_deliveryman = id;
+      request.username = username;
       return next();
     } catch (error) {
       return response.status(401).json({message:"token is not valid"})

@@ -9,7 +9,6 @@ interface IPayload{
 }
 
 export function verifyTokenAuthenticationClient(
-  error:Error,
   request: Request,
   response:Response, 
   next:NextFunction
@@ -26,7 +25,10 @@ export function verifyTokenAuthenticationClient(
     // validar se é o token gerado é válido com a chave utilizada e pegar os payload
     try {
       const {sub,username}  = verify(token,process.env.KEY_TOKEN!) as IPayload;
+      console.log(sub);
       // alterar requisição
+      request.username = username;
+      request.id_client = sub;
       return next();
     } catch (error) {
       return response.status(403).json({message:"token is not valid"})

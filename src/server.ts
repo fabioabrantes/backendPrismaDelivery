@@ -5,6 +5,7 @@ import * as dotenv from 'dotenv';
 import { verifyTokenAuthenticationClient } from './middlewares/verifyTokenAuthenticationClient';
 import { verifyTokenAuthenticationDeliveryman } from './middlewares/verifyTokenAuthenticationDeliveryman';
 
+//controllers
 import { RegisterClientController } from './modules/clients/registerClient/RegisterClientController';
 import { AuthenticateClientController } from './modules/authentication/authenticationClient/AuthenticateClientController';
 import { RegisterDeliverymanController } from './modules/deliveryman/register/RegisterDeliverymanController';
@@ -13,6 +14,7 @@ import { FindAllByDeliverymanController } from './modules/deliveries/findAllByDe
 import { FindAllUndeliverableController } from './modules/deliveries/findAllUndeliverable/FindAllUndeliverableController';
 import { RegisterByClientController } from './modules/deliveries/registerByClient/RegisterByClientController';
 import { UpdateByDeliverymanController } from './modules/deliveries/updateByDeliveryman/UpdateByDeliverymanController';
+import { AuthenticateDeliverymanController } from './modules/authentication/authenticationDeliveryman/AuthenticateDeliverymanController';
 
 
 
@@ -29,6 +31,8 @@ app.post('/client/register',registerClientController.handle);
 //autenticação
 const authenticateClientController = new AuthenticateClientController();
 app.post('/client/login',authenticateClientController.handle);
+const authenticateDeliverymanController = new AuthenticateDeliverymanController();
+app.post('/deliveryman/login',authenticateDeliverymanController.handle);
 
 // deliveryman
 const registerDeliverymanController = new RegisterDeliverymanController();

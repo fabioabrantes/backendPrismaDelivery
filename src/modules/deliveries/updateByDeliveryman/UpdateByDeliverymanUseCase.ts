@@ -14,7 +14,8 @@ export class UpdateByDeliverymanUseCase{
         id:id_delivery
       },
       data:{
-        id_fk_deliveryman:id_deliveryman
+        id_fk_deliveryman:id_deliveryman,
+        end_at: new Date(),
       }
     });
     return result;

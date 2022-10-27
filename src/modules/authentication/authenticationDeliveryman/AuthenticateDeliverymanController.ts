@@ -10,7 +10,7 @@ export class AuthenticateDeliverymanController{
     
     // instantica e chama o método do caso de uso
     const autenticateDeliverymanUseCase = new AuthenticateDeliverymanUseCase();
-    const token = autenticateDeliverymanUseCase.execute({ username,password })
+    const token = await autenticateDeliverymanUseCase.execute({ username,password })
     return res.status(200).json(token);
   }
 }
